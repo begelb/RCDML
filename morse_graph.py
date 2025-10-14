@@ -45,13 +45,13 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     #  base_output_dir = f'output/Leslie/23.5_23.5/{num_pts}'
-    model_dir = os.path.join(output_dir, '/models')
+    model_dir = os.path.join(output_dir, 'models')
     model_path = os.path.join(model_dir, 'dynamics.pt')
     x_scaler_path = os.path.join(base_output_dir, 'scalers/x_scaler.gz')
     y_scaler_path = os.path.join(base_output_dir, 'scalers/y_scaler.gz')
 
     state_dict = torch.load(model_path, map_location=device, weights_only=True)
-    dynamics_model = DynamicsModel()
+    dynamics_model = DynamicsModel(num_layers=config.num_layers, hidden_shape=config.hidden_shape, non_linearity=config.non_linearity)
     dynamics_model.load_state_dict(state_dict)
     dynamics_model.to(device)
     dynamics_model.eval()
