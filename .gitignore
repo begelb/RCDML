@@ -1,0 +1,7 @@
+data/
+output/
+generated_configs/
+base_config/
+src/__pycache__/
+temp.py
+.DS_Store
