@@ -42,47 +42,46 @@ if __name__ == "__main__":
     base_output_dir = config.base_output_dir 
     output_dir = config.output_dir
 
-    for ex_index in range(10):
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-      #  base_output_dir = f'output/Leslie/23.5_23.5/{num_pts}'
-        model_dir = os.path.join(output_dir, '/models')
-        model_path = os.path.join(model_dir, 'dynamics.pt')
-        x_scaler_path = os.path.join(base_output_dir, 'scalers/x_scaler.gz')
-        y_scaler_path = os.path.join(base_output_dir, 'scalers/y_scaler.gz')
+    #  base_output_dir = f'output/Leslie/23.5_23.5/{num_pts}'
+    model_dir = os.path.join(output_dir, '/models')
+    model_path = os.path.join(model_dir, 'dynamics.pt')
+    x_scaler_path = os.path.join(base_output_dir, 'scalers/x_scaler.gz')
+    y_scaler_path = os.path.join(base_output_dir, 'scalers/y_scaler.gz')
 
-        state_dict = torch.load(model_path, map_location=device, weights_only=True)
-        dynamics_model = DynamicsModel()
-        dynamics_model.load_state_dict(state_dict)
-        dynamics_model.to(device)
-        dynamics_model.eval()
+    state_dict = torch.load(model_path, map_location=device, weights_only=True)
+    dynamics_model = DynamicsModel()
+    dynamics_model.load_state_dict(state_dict)
+    dynamics_model.to(device)
+    dynamics_model.eval()
 
-        x_scaler = joblib.load(x_scaler_path)
-        y_scaler = joblib.load(y_scaler_path)
-        
-        g = partial(g_base, dynamics_model=dynamics_model, device=device, x_scaler=x_scaler, y_scaler=y_scaler)
+    x_scaler = joblib.load(x_scaler_path)
+    y_scaler = joblib.load(y_scaler_path)
+    
+    g = partial(g_base, dynamics_model=dynamics_model, device=device, x_scaler=x_scaler, y_scaler=y_scaler)
 
-        def G(rect):
-            return CMGDB.BoxMap(g, rect, padding=True)
+    def G(rect):
+        return CMGDB.BoxMap(g, rect, padding=True)
 
-        lower_bounds = config.lower_bounds
-        upper_bounds = config.upper_bounds
-        
-        subdiv_min = config.subdiv_min
-        subdiv_max = config.subdiv_max
-        subdiv_init = config.subdiv_init
-        subdiv_limit = config.subdiv_limit
+    lower_bounds = config.lower_bounds
+    upper_bounds = config.upper_bounds
+    
+    subdiv_min = config.subdiv_min
+    subdiv_max = config.subdiv_max
+    subdiv_init = config.subdiv_init
+    subdiv_limit = config.subdiv_limit
 
-        model = CMGDB.Model(subdiv_min, subdiv_max, subdiv_init, subdiv_limit, lower_bounds, upper_bounds, G)
+    model = CMGDB.Model(subdiv_min, subdiv_max, subdiv_init, subdiv_limit, lower_bounds, upper_bounds, G)
 
-        morse_graph, map_graph = CMGDB.ComputeConleyMorseGraph(model)
-        
-        MG_dir = os.path.join(output_dir, 'MG')
+    morse_graph, map_graph = CMGDB.ComputeConleyMorseGraph(model)
+    
+    MG_dir = os.path.join(output_dir, 'MG')
 
-        # with open(os.path.join(MG_dir, 'morse_graph.pkl'), 'wb') as f:
-        #     pickle.dump(morse_graph, f)
+    # with open(os.path.join(MG_dir, 'morse_graph.pkl'), 'wb') as f:
+    #     pickle.dump(morse_graph, f)
 
-        morse_graph_plot = CMGDB.PlotMorseGraph(morse_graph)
-        morse_graph_plot.render(os.path.join(MG_dir, 'morse_graph'), format='png', view=False, cleanup=True)
+    morse_graph_plot = CMGDB.PlotMorseGraph(morse_graph)
+    morse_graph_plot.render(os.path.join(MG_dir, 'morse_graph'), format='png', view=False, cleanup=True)
 
-        morse_sets_plot = CMGDB.PlotMorseSets(morse_graph, xlim=[lower_bounds[0], upper_bounds[0]], ylim=[lower_bounds[1], upper_bounds[1]], fig_fname=os.path.join(MG_dir, 'morse_sets'))
+    morse_sets_plot = CMGDB.PlotMorseSets(morse_graph, xlim=[lower_bounds[0], upper_bounds[0]], ylim=[lower_bounds[1], upper_bounds[1]], fig_fname=os.path.join(MG_dir, 'morse_sets'))
