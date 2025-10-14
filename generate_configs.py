@@ -9,7 +9,7 @@ with open('base_config/Leslie.txt', 'r') as f:
     base_config = ast.literal_eval(base_config_str)
 
 # Create the directory to store the generated config files
-output_dir_name = 'generated_configs'
+output_dir_name = 'data_and_hsize_configs'
 if not os.path.exists(output_dir_name):
     os.makedirs(output_dir_name)
 

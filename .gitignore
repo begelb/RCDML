@@ -6,3 +6,4 @@ src/__pycache__/
 temp.py
 .DS_Store
 config_summary.txt
+data_and_hsize_configs/
