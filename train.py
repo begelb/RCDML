@@ -52,8 +52,9 @@ if __name__ == "__main__":
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
-    model_dir = os.path.join(base_output_dir, f'{ex_index}/models')
-    log_dir = os.path.join(base_output_dir, f'{ex_index}/logs')
+    output_dir = config.output_dir
+    model_dir = os.path.join(output_dir, 'models')
+    log_dir = os.path.join(output_dir, 'logs')
 
     num_layers = config.num_layers
     hidden_shape = config.hidden_shape

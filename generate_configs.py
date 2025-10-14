@@ -24,7 +24,7 @@ ex_index_range = range(0, 11) # 0 to 10 for ex_index
 
 # Iterate through all combinations of the parameters
 for k in k_range:
-    num_pts = 2**k
+    num_pts = (2**k) * 10
     for j in j_range:
         hidden_shape = 2**j
         for ex_index in ex_index_range:

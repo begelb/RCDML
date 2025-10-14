@@ -40,12 +40,13 @@ if __name__ == "__main__":
     num_pts = config.num_pts
     ex_index = config.ex_index
     base_output_dir = config.base_output_dir 
+    output_dir = config.output_dir
 
     for ex_index in range(10):
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
       #  base_output_dir = f'output/Leslie/23.5_23.5/{num_pts}'
-        model_dir = os.path.join(base_output_dir, f'{ex_index}/models')
+        model_dir = os.path.join(output_dir, '/models')
         model_path = os.path.join(model_dir, 'dynamics.pt')
         x_scaler_path = os.path.join(base_output_dir, 'scalers/x_scaler.gz')
         y_scaler_path = os.path.join(base_output_dir, 'scalers/y_scaler.gz')
@@ -75,8 +76,8 @@ if __name__ == "__main__":
         model = CMGDB.Model(subdiv_min, subdiv_max, subdiv_init, subdiv_limit, lower_bounds, upper_bounds, G)
 
         morse_graph, map_graph = CMGDB.ComputeConleyMorseGraph(model)
-
-        MG_dir = os.path.join(base_output_dir, f'{ex_index}/MG')
+        
+        MG_dir = os.path.join(output_dir, 'MG')
 
         # with open(os.path.join(MG_dir, 'morse_graph.pkl'), 'wb') as f:
         #     pickle.dump(morse_graph, f)
