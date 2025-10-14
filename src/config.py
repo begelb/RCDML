@@ -9,6 +9,7 @@ class Config:
         self.ex_index = config['ex_index']
         self.num_layers = config['num_layers']
         self.base_output_dir = config['base_output_dir'] + f'{self.num_pts}'
+        self.output_dir = config['output_dir']
         self.subdiv_min = config['subdiv_min']
         self.subdiv_max = config['subdiv_max']
         self.subdiv_init = config['subdiv_init']
