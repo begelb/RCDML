@@ -4,7 +4,12 @@ import joblib # Import joblib
 import os
 
 if __name__ == "__main__":
-    for num_pts in [20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240]:
+    num_pt_list = []
+    for j in range(11, 16):
+        num_pts = (2**j) * 10
+        num_pt_list.append(num_pts)
+
+    for num_pts in num_pt_list:#[20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240]:
     
         train_data = np.loadtxt(f'data/new/Leslie/23.5_23.5/{num_pts}/train.csv', delimiter=',', skiprows=1)
         test_data = np.loadtxt(f'data/new/Leslie/23.5_23.5/{num_pts}/test.csv', delimiter=',', skiprows=1)
