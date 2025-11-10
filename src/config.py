@@ -23,3 +23,5 @@ class Config:
         self.num_layers = config['num_layers']
         self.hidden_shape = config['hidden_shape']
         self.non_linearity = config['non_linearity']
+        self.model_dir = config['model_dir']
+        self.scaler_dir = config['scaler_dir']
