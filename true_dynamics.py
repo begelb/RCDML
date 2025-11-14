@@ -3,6 +3,7 @@ import math
 import os
 import ast
 import argparse
+import time
 
 def f(x):
   th1 = 23.5
@@ -32,6 +33,8 @@ class Config:
 
 if __name__ == "__main__":
 
+    start_time = time.perf_counter()
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--config_dir',help='Directory of config files',type=str,default='true_dynamics_configs/')
     parser.add_argument('--config',help='Config file inside config_dir',type=str,default='config_0.txt')
@@ -55,6 +58,10 @@ if __name__ == "__main__":
 
     morse_sets_plot = CMGDB.PlotMorseSets(morse_graph, xlim=[config.lower_bounds[0], config.upper_bounds[0]], ylim=[config.lower_bounds[1], config.upper_bounds[1]], fig_fname=os.path.join(config.output_dir, 'morse_sets'))
 
+    end_time = time.perf_counter()
+
+    duration_mins = round((end_time - start_time)//60)
+
     filename = os.path.join(config.output_dir, 'computation_log.txt')
     with open(filename, "w") as f:
         f.write("--- Computation Parameters ---\n")
@@ -64,4 +71,6 @@ if __name__ == "__main__":
         f.write(f"Subdivision init: {config.subdiv_init}\n")
         f.write(f"Subdivision min: {config.subdiv_min}\n")
         f.write(f"Subdivision max: {config.subdiv_max}\n")
-        f.write(f"Subdivision limit: {config.subdiv_limit}")
+        f.write(f"Subdivision limit: {config.subdiv_limit}\n")
+        f.write("------------------------------\n")
+        f.write(f"Program duration: {duration_mins} minutes")
