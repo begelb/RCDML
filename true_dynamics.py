@@ -1,9 +1,11 @@
 import CMGDB
+import CMGDB_utils
 import math
 import os
 import ast
 import argparse
 import time
+import matplotlib
 
 def f(x):
   th1 = 23.5
@@ -11,7 +13,7 @@ def f(x):
   return [(th1 * x[0] + th2 * x[1]) * math.exp(-0.1 * (x[0] + x[1])), 0.7 * x[0]]
 
 def F(rect):
-    return CMGDB.BoxMap(f, rect, padding=True)
+    return CMGDB.BoxMap(f, rect, padding=False)
 
 class Config:
    def __init__(self, config_fname):
@@ -37,7 +39,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--config_dir',help='Directory of config files',type=str,default='true_dynamics_configs/')
-    parser.add_argument('--config',help='Config file inside config_dir',type=str,default='config_0.txt')
+    parser.add_argument('--config',help='Config file inside config_dir',type=str,default='base.txt')
 
     args = parser.parse_args()
     config_fname = args.config_dir + args.config
@@ -52,11 +54,15 @@ if __name__ == "__main__":
     model = CMGDB.Model(config.subdiv_min, config.subdiv_max, config.subdiv_init, config.subdiv_limit, config.lower_bounds, config.upper_bounds, F)
 
     morse_graph, map_graph = CMGDB.ComputeConleyMorseGraph(model)
-        
-    morse_graph_plot = CMGDB.PlotMorseGraph(morse_graph)
-    morse_graph_plot.render(os.path.join(config.output_dir, 'morse_graph'), format='png', view=False, cleanup=True)
 
-    morse_sets_plot = CMGDB.PlotMorseSets(morse_graph, xlim=[config.lower_bounds[0], config.upper_bounds[0]], ylim=[config.lower_bounds[1], config.upper_bounds[1]], fig_fname=os.path.join(config.output_dir, 'morse_sets'))
+   # clist = ['#ffb000', '#fe6100', '#dc267f', '#785ef0', '#648fff', '#13EAC9']
+   # clist = ['#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7', '#CC79A7']
+        
+    morse_graph_plot = CMGDB_utils.PlotMorseGraph_new(morse_graph)
+    morse_graph_plot.render(os.path.join(config.output_dir, 'morse_graph'), format='png', view=False, cleanup=False)
+
+    #morse_sets_plot = CMGDB_utils.PlotMorseSets_new(morse_graph, clist=clist, scale_factor=[1, 1, 30, 1], xlim=[config.lower_bounds[0], config.upper_bounds[0]], ylim=[config.lower_bounds[1], config.upper_bounds[1]], fig_fname=os.path.join(config.output_dir, 'morse_sets'))
+    morse_sets_plot = CMGDB_utils.PlotMorseSets_new(morse_graph, scale_factor=[1, 1, 30, 1], xlim=[config.lower_bounds[0], config.upper_bounds[0]], ylim=[config.lower_bounds[1], config.upper_bounds[1]], fig_fname=os.path.join(config.output_dir, 'morse_sets'))
 
     end_time = time.perf_counter()
 
