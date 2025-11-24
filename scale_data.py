@@ -5,14 +5,16 @@ import os
 
 if __name__ == "__main__":
     num_pt_list = []
-    for j in range(11, 16):
+    for j in range(5,9):
         num_pts = (2**j) * 10
         num_pt_list.append(num_pts)
 
     for num_pts in num_pt_list:#[20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240]:
     
-        train_data = np.loadtxt(f'data/new/Leslie/23.5_23.5/{num_pts}/train.csv', delimiter=',', skiprows=1)
-        test_data = np.loadtxt(f'data/new/Leslie/23.5_23.5/{num_pts}/test.csv', delimiter=',', skiprows=1)
+        train_data = np.loadtxt(f'data/new/Leslie/23.5_23.5/20_iterations/{num_pts}_20_iterations/train.csv', delimiter=',', skiprows=1)
+        test_data = np.loadtxt(f'data/new/Leslie/23.5_23.5/20_iterations/{num_pts}_20_iterations/test.csv', delimiter=',', skiprows=1)
+        # train_data = np.loadtxt(f'data/new/Leslie/23.5_23.5/{num_pts}/train.csv', delimiter=',', skiprows=1)
+        # test_data = np.loadtxt(f'data/new/Leslie/23.5_23.5/{num_pts}/test.csv', delimiter=',', skiprows=1)
 
         # Separate inputs (x) and outputs (y)
         x_train = train_data[:, :2]
@@ -34,7 +36,7 @@ if __name__ == "__main__":
         y_test_scaled = y_scaler.transform(y_test)
 
         # --- END: Normalization ---
-        output_dir = f'output/Leslie/23.5_23.5/{num_pts}/scalers/'
+        output_dir = f'output/Leslie/23.5_23.5/20_iterations/{num_pts}/scalers/'
         os.makedirs(output_dir, exist_ok=True) # Ensure the directory exists
         joblib.dump(x_scaler, os.path.join(output_dir, 'x_scaler.gz'))
         joblib.dump(y_scaler, os.path.join(output_dir, 'y_scaler.gz'))
