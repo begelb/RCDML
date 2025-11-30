@@ -1,2 +1,2 @@
-# Rigorously Characterizing Dynamics with Machine Learning
+# RCDML: Rigorously Characterizing Dynamics with Machine Learning
 
