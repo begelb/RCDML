@@ -1,2 +1,2 @@
-# rigorous_ML
+# Rigorously Characterizing Dynamics with Machine Learning
 
