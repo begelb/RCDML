@@ -5,7 +5,7 @@ This code accompanies the paper [Rigorously Characterizing Dynamics with Machine
 We learn neural network approximations to the two-dimensional Leslie model, and then compute Morse graphs and Conley indices using the approximations.
 
 # Dependencies 
-This repository depends on [CMGDB_utils]([url](https://github.com/marciogameiro/CMGDB_utils))
+This repository depends on [CMGDB_utils](https://github.com/marciogameiro/CMGDB_utils)
 
 # Saved data, scalers, and models
 The datasets used for the paper are contained in ```data```.
