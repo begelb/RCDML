@@ -6,11 +6,12 @@ from src.model import DynamicsModel
 import numpy
 import joblib  # Import joblib
 import matplotlib
-matplotlib.use('Agg')
+#matplotlib.use('Agg')
 import numpy as np
 import pickle
 from src.config import Config
 import argparse
+import CMGDB_utils
 
 @torch.no_grad()
 def g_base(x, dynamics_model, device, x_scaler, y_scaler):
@@ -29,7 +30,7 @@ def g_base(x, dynamics_model, device, x_scaler, y_scaler):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config_dir',help='Directory of config files',type=str,default='base_config/')
+    parser.add_argument('--config_dir',help='Directory of config files',type=str,default='config/')
     parser.add_argument('--config',help='Config file inside config_dir',type=str,default='Leslie.txt')
 
     args = parser.parse_args()
@@ -78,7 +79,13 @@ if __name__ == "__main__":
 
     model = CMGDB.Model(subdiv_min, subdiv_max, subdiv_init, subdiv_limit, lower_bounds, upper_bounds, G)
 
+    morse_fname = 'tmp2'
     morse_graph, map_graph = CMGDB.ComputeConleyMorseGraph(model)
+
+    # morse_nodes = range(morse_graph.num_vertices())
+    # morse_sets = [box + [node]
+    #                 for node in morse_nodes for box in morse_graph.morse_set_boxes(node)]
+    # np.savetxt(morse_fname, np.array(morse_sets), delimiter=',')
     
     MG_dir = os.path.join(output_dir, 'MG')
 
@@ -86,6 +93,14 @@ if __name__ == "__main__":
     #     pickle.dump(morse_graph, f)
 
     morse_graph_plot = CMGDB.PlotMorseGraph(morse_graph)
-    morse_graph_plot.render(os.path.join(MG_dir, 'morse_graph'), format='png', view=False, cleanup=True)
+    #morse_graph_plot.render(os.path.join(MG_dir, 'morse_graph'), format='png', view=False, cleanup=True)
+    morse_graph_plot.render('morse_graph2', format='png', view=False, cleanup=False)
+
+    CMGDB.SaveMorseSets(morse_graph, morse_fname)
+    CMGDB.LoadMorseSetFile(morse_fname)
+
+   # CMGDB.PlotMorseSets(morse_sets)
+
+    CMGDB.PlotMorseGraph(morse_graph)
 
     morse_sets_plot = CMGDB.PlotMorseSets(morse_graph, xlim=[lower_bounds[0], upper_bounds[0]], ylim=[lower_bounds[1], upper_bounds[1]], fig_fname=os.path.join(MG_dir, 'morse_sets'))

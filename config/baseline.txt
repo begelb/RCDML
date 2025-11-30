@@ -1,0 +1,11 @@
+{
+    'output_dir': 'output/true_dynamics/',
+    'subdiv_min': 27,
+    'subdiv_max': 28,
+    'subdiv_init': 27,
+    'subdiv_limit': 10000,
+    'lower_x': 0,
+    'lower_y': 0,
+    'upper_x': 90,
+    'upper_y': 70
+}

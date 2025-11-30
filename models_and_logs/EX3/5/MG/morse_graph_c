@@ -1,0 +1,12 @@
+digraph {
+0 [label="0 : (x^6-1, 0, 0)", shape=ellipse, style=filled, fillcolor="#1f77b4ff", margin="0.11, 0.055"];
+1 [label="1 : (0, x^3+1, 0)", shape=ellipse, style=filled, fillcolor="#98df8aff", margin="0.11, 0.055"];
+2 [label="2 : (x-1, x-1, 0)", shape=ellipse, style=filled, fillcolor="#8c564bff", margin="0.11, 0.055"];
+3 [label="3 : (0, x^3-1, 0)", shape=ellipse, style=filled, fillcolor="#c7c7c7ff", margin="0.11, 0.055"];
+4 [label="4 : (0, 0, x-1)", shape=ellipse, style=filled, fillcolor="#9edae5ff", margin="0.11, 0.055"];
+{rank=same; 0 2 }; 
+1 -> 0;
+3 -> 1;
+3 -> 2;
+4 -> 2;
+}

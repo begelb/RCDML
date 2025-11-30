@@ -9,7 +9,7 @@ import argparse
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config_dir',help='Directory of config files',type=str,default='base_config/')
+    parser.add_argument('--config_dir',help='Directory of config files',type=str,default='config/')
     parser.add_argument('--config',help='Config file inside config_dir',type=str,default='Leslie.txt')
 
     args = parser.parse_args()
@@ -19,15 +19,16 @@ if __name__ == "__main__":
 
     num_pts = config.num_pts
     ex_index = config.ex_index
-    base_data_dir = f'data/new/Leslie/23.5_23.5/{num_pts}'
+    base_data_dir = 'data/EX1'
     train_data_path = os.path.join(base_data_dir, 'train.csv')
     test_data_path = os.path.join(base_data_dir, 'test.csv')
     train_data = np.loadtxt(train_data_path, delimiter=',', skiprows=1)
     test_data = np.loadtxt(test_data_path, delimiter=',', skiprows=1)
 
     base_output_dir = config.base_output_dir 
-    x_scaler_path = os.path.join(base_output_dir, 'scalers/x_scaler.gz')
-    y_scaler_path = os.path.join(base_output_dir, 'scalers/y_scaler.gz')
+    scaler_dir = config.scaler_dir
+    x_scaler_path = os.path.join(scaler_dir, 'x_scaler.gz')
+    y_scaler_path = os.path.join(scaler_dir, 'y_scaler.gz')
 
     x_scaler = joblib.load(x_scaler_path)
     y_scaler = joblib.load(y_scaler_path)

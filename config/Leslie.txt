@@ -1,0 +1,19 @@
+{
+    'num_pts': 160,
+    'ex_index': 0,
+    'base_output_dir': 'output/Leslie/23.5_23.5/',
+    'output_dir': 'output/Leslie/23.5_23.5/',
+    'model_dir': 'output/Leslie/23.5_23.5/models',
+    'scaler_dir': 'output/Leslie/23.5_23.5/scalers',
+    'subdiv_min': 20,
+    'subdiv_max': 22,
+    'subdiv_init': 8,
+    'subdiv_limit': 10000,
+    'lower_x': 0,
+    'lower_y': 0,
+    'upper_x': 90,
+    'upper_y': 70,
+    'num_layers': 3,
+    'hidden_shape': 32,
+    'non_linearity': 'ReLU'
+}
