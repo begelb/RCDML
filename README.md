@@ -7,18 +7,18 @@ We learn neural network approximations to the two-dimensional Leslie model, and 
 # Dependencies 
 This repository depends on [CMGDB_utils](https://github.com/marciogameiro/CMGDB_utils).
 
-# Saved data, scalers, and models
+# Usage
+
+## Data, scalers, and models
 The datasets used for the paper are contained in ```data```.
 The data scalers used for the paper are contained in ```scalers```.
 The models used for the paper are contained in ```models_and_logs```.
-
-# Usage
 
 ## Baseline
 Perform the baseline computations using ```baseline.py```.
 
 ## Data
-The datasets used for the paper are in the folder ```data```.
+Make new datasets using ```make_data.py```.
 Compute data scalers using ```scale_data.py```.
 
 ## Config files
