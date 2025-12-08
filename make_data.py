@@ -1,7 +1,5 @@
-import math
 import numpy as np
 import os
-import matplotlib.pyplot as plt
 from src.leslie_model import LeslieModel
     
 def sample_random_pts(lower_bounds, upper_bounds, n):

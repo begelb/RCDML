@@ -1,4 +1,4 @@
-data/
+data_preliminary/
 output/
 generated_configs/
 base_config/
@@ -11,3 +11,16 @@ more_data/
 more_data2/
 new_MG/
 true_dynamics_configs/
+config_20_iterations/
+part_c_ten_trials/
+new_MG_configs/
+config_uniform_sbdv_EX1/
+config_uniform_sbdv_EX2/
+data_preliminary/
+configs/
+*/MG
+output_old/
+generated_config/
+figure_files/
+utils/change_colors.ipynb
+models_and_logs/

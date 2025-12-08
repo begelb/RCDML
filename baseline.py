@@ -1,5 +1,4 @@
 import CMGDB
-import CMGDB_utils
 import math
 import os
 import ast
@@ -38,13 +37,12 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--config_dir',help='Directory of config files',type=str,default='config/')
-    parser.add_argument('--config',help='Config file inside config_dir',type=str,default='baseline.txt')
+    parser.add_argument('--config',help='Config file inside config_dir',type=str,default='baseline2.txt')
 
     args = parser.parse_args()
     config_fname = args.config_dir + args.config
 
-    print('config_fname: ', config_fname)
-
+    print(args.config)
     config = Config(config_fname)
 
     if not os.path.exists(config.output_dir):
@@ -54,21 +52,21 @@ if __name__ == "__main__":
 
     morse_graph, map_graph = CMGDB.ComputeConleyMorseGraph(model)
 
-   # clist = ['#ffb000', '#fe6100', '#dc267f', '#785ef0', '#648fff', '#13EAC9']
-    clist = ['#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7', '#CC79A7']
-   # clist = ['#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7', '#CC79A7']
-   # clist_new = ['#E69F00', '#D55E00', '#CC79A7', '#56B4E9', '#009E73', '#F0E442', '#CC79A7']
-    clist_new = ['#AA4499', '#E69F00', '#CC79A7', '#56B4E9', '#009E73', '#F0E442']
+    ''' This color list and scale factor was used for Fig 4 (a)'''
+    # clist = ['#E69F00', '#56B4E9', '#009E73', '#F0E442']
+    # scale_factor = [1, 1, 10, 1]
+
+    ''' This color list and scale factor was used for Fig 4 (b)'''
+    clist = ['#AA4499', '#E69F00', '#CC79A7', '#56B4E9', '#009E73', '#F0E442']
+    scale_factor = [1, 1, 100, 100, 200, 100]   
         
-    morse_graph_plot = CMGDB_utils.PlotMorseGraph_new(morse_graph, clist=clist_new)
-    morse_graph_plot.render(os.path.join(config.output_dir, 'morse_graph'), format='png', view=False, cleanup=False)
+    morse_graph_plot = CMGDB.PlotMorseGraph(morse_graph, clist=clist)
+  #  morse_graph_plot.view('morse_graph')
+    morse_graph_plot.render(os.path.join(config.output_dir, 'morse_graph'), format='pdf', view=False, cleanup=False)
 
-
-    #morse_sets_plot = CMGDB_utils.PlotMorseSets_new(morse_graph, clist=clist, scale_factor=[1, 1, 30, 1], xlim=[config.lower_bounds[0], config.upper_bounds[0]], ylim=[config.lower_bounds[1], config.upper_bounds[1]], fig_fname=os.path.join(config.output_dir, 'morse_sets'))
-    #morse_sets_plot = CMGDB_utils.PlotMorseSets_new(morse_graph, clist=clist_new, scale_factor=[1, 1, 1, 1, 1, 1, 1, 1, 1], xlim=[config.lower_bounds[0], config.upper_bounds[0]], ylim=[config.lower_bounds[1], config.upper_bounds[1]], fig_fname=os.path.join(config.output_dir, 'morse_sets'))
     filename = os.path.join(config.output_dir, 'morse_sets.PDF')
-    CMGDB_utils.PlotMorseSets_new(morse_graph, clist=clist_new, scale_factor=[1, 1, 100, 100, 200, 100], xlim=[0, 90], ylim=[0, 70], xlabel='$x_1$', ylabel='$x_2$', fontsize=20, fig_fname=filename)
-    CMGDB.SaveMorseSets(morse_graph, 'morse_sets')
+    CMGDB.PlotMorseSets(morse_graph, clist=clist, scale_factor=scale_factor, xlim=[0, 90], ylim=[0, 70], xlabel='$x_1$', ylabel='$x_2$', fontsize=20, fig_fname=filename)
+    #CMGDB.SaveMorseSets(morse_graph, 'morse_sets')
 
     end_time = time.perf_counter()
 

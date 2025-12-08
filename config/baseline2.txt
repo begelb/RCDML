@@ -1,5 +1,5 @@
 {
-    'output_dir': 'output/true_dynamics/',
+    'output_dir': 'output/true_dynamics/2',
     'subdiv_min': 27,
     'subdiv_max': 28,
     'subdiv_init': 27,

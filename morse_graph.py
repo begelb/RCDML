@@ -3,15 +3,10 @@ import CMGDB
 from functools import partial
 import os
 from src.model import DynamicsModel
-import numpy
 import joblib  # Import joblib
-import matplotlib
-#matplotlib.use('Agg')
 import numpy as np
-import pickle
 from src.config import Config
 import argparse
-import CMGDB_utils
 
 @torch.no_grad()
 def g_base(x, dynamics_model, device, x_scaler, y_scaler):
@@ -45,13 +40,10 @@ if __name__ == "__main__":
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    #  base_output_dir = f'output/Leslie/23.5_23.5/{num_pts}'
-   # model_dir = os.path.join(output_dir, 'models')
     model_dir = config.model_dir
     model_path = os.path.join(model_dir, 'dynamics.pt')
     scaler_dir = config.scaler_dir 
-    # x_scaler_path = os.path.join(base_output_dir, 'scalers/x_scaler.gz')
-    # y_scaler_path = os.path.join(base_output_dir, 'scalers/y_scaler.gz')
+
     x_scaler_path = os.path.join(scaler_dir, 'x_scaler.gz')
     y_scaler_path = os.path.join(scaler_dir, 'y_scaler.gz')
 
@@ -79,27 +71,14 @@ if __name__ == "__main__":
 
     model = CMGDB.Model(subdiv_min, subdiv_max, subdiv_init, subdiv_limit, lower_bounds, upper_bounds, G)
 
-    morse_fname = 'tmp2'
+    #morse_fname = 'morse_sets'
     morse_graph, map_graph = CMGDB.ComputeConleyMorseGraph(model)
-
-    # morse_nodes = range(morse_graph.num_vertices())
-    # morse_sets = [box + [node]
-    #                 for node in morse_nodes for box in morse_graph.morse_set_boxes(node)]
-    # np.savetxt(morse_fname, np.array(morse_sets), delimiter=',')
-    
     MG_dir = os.path.join(output_dir, 'MG')
 
-    # with open(os.path.join(MG_dir, 'morse_graph.pkl'), 'wb') as f:
-    #     pickle.dump(morse_graph, f)
-
     morse_graph_plot = CMGDB.PlotMorseGraph(morse_graph)
-    #morse_graph_plot.render(os.path.join(MG_dir, 'morse_graph'), format='png', view=False, cleanup=True)
     morse_graph_plot.render('morse_graph2', format='png', view=False, cleanup=False)
 
-    CMGDB.SaveMorseSets(morse_graph, morse_fname)
-    CMGDB.LoadMorseSetFile(morse_fname)
-
-   # CMGDB.PlotMorseSets(morse_sets)
+   # CMGDB.SaveMorseSets(morse_graph, morse_fname)
 
     CMGDB.PlotMorseGraph(morse_graph)
 
